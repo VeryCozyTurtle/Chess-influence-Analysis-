@@ -111,9 +111,15 @@ pgn_file = "chessanalysis_input.py"
 game = parse_pgn(pgn_file)
 board = game.board()
 
-# Store influence maps and boards for each move
+# Store influence maps and boards for each move including turn 0 (initial state)
 influence_maps = []
 boards = []
+
+# Add initial board state (turn 0)
+initial_influence = calculate_influence(board)
+influence_maps.append(initial_influence)
+boards.append(board.copy())
+
 for move in game.mainline_moves():
     board.push(move)
     influence = calculate_influence(board)
